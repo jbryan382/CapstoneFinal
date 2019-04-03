@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using CapstoneFinal.Models;
 
 namespace content
 {
@@ -44,5 +45,10 @@ namespace content
     {
       modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
     }
+
+
+
+    public DbSet<Docket> Dockets { get; set; }
+    public DbSet<Courthouse> Courthouses { get; set; }
   }
 }
