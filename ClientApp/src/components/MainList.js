@@ -1,7 +1,22 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-class Streams extends Component {
+class DocketList extends Component {
+  state = {
+    docketResp: []
+  }
+
+  componentDidMount() {
+    axios.get('/api/Dockets').then(resp => {
+      console.log({ resp })
+
+      this.setState({
+        docketResp: resp.data
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -11,16 +26,33 @@ class Streams extends Component {
           <input placeholder="Search" />
           <div>🔍</div>
         </section>
-        <section>
-          {/* This Section will be dynamically updated for each stream */}
-          <section className="ListSection">
-            {/* The Images will be the links to the designated streamers */}
-            <h3>Docket/Case Title</h3>
-            <Link to="/Doc">Case Number</Link>
-            <h5>Date and Time of the Hearing</h5>
-            <h5>Time Until Court Hearing</h5>
-            <p>Description of Docket</p>
-          </section>
+        <section className="ListSection">
+          <ul>
+            {this.state.docketResp.map((c, i) => {
+              return (
+                <div>
+                  <li key={i}>
+                    {this.state.docketResp[i].caseName}
+                    <ul>
+                      <li>
+                        Docket Number: {this.state.docketResp[i].docketNumber}
+                        <li>
+                          Current Status:{' '}
+                          {this.state.docketResp[i].currentStatus}
+                        </li>
+                      </li>
+                      <li>
+                        Hearing Date: {this.state.docketResp[i].hearingDate}
+                      </li>
+                      <li>
+                        Date Created: {this.state.docketResp[i].dateCreated}
+                      </li>
+                    </ul>
+                  </li>
+                </div>
+              )
+            })}
+          </ul>
         </section>
         <footer>
           <h4>Copyright Information and Stuff.</h4>
@@ -31,4 +63,4 @@ class Streams extends Component {
   }
 }
 
-export default Streams
+export default DocketList

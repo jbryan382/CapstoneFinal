@@ -14,12 +14,13 @@ namespace content.Controllers
   [ApiController]
   public class DocketsController : ControllerBase
   {
-    private readonly DatabaseContext _context;
+    private DatabaseContext _context;
 
-    public DocketsController(DatabaseContext context)
+    public DocketsController()
     {
-      _context = context;
+      this._context = new DatabaseContext();
     }
+
 
     // GET: api/Dockets
     [HttpGet]
