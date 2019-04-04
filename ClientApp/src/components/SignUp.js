@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-class Login extends Component {
+class SignUp extends Component {
   render() {
     return (
       <div>
-        <h1 className="LoginTitle">Title/Logo Here</h1>
         <section className="LoginWindow">
-          <h3>Login:</h3>
+          <h3>Sign Up:</h3>
           {/* I would like to use OAuth to prevent the need to store or authorize users locally */}
           <input placeholder="Username" />
           <input placeholder="Password" />
-          <Link to="mainList">Login</Link>
-          <h4>or</h4>
-          <Link to="SignUp">Sign Up</Link>
+          <input placeholder="E-Mail" />
+          <input placeholder="D.O.B" />
+          <input placeholder="Reason for Usage" />
+          <Link to="mainList">Sign Up</Link>
         </section>
         <footer>
           <h4>Copyright Information and Stuff.</h4>
@@ -24,4 +24,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default SignUp

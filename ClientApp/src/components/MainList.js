@@ -21,7 +21,7 @@ class DocketList extends Component {
     return (
       <div>
         <h1>Court Docket List:</h1>
-        <Link to="/">Log Out</Link>
+        {/* <Link to="/">Log Out</Link> */}
         <section className="SearchBar">
           <input placeholder="Search" />
           <div>🔍</div>
@@ -36,10 +36,10 @@ class DocketList extends Component {
                     <ul>
                       <li>
                         Docket Number: {this.state.docketResp[i].docketNumber}
-                        <li>
-                          Current Status:{' '}
-                          {this.state.docketResp[i].currentStatus}
-                        </li>
+                      </li>
+                      <li>
+                        Current Status:
+                        {this.state.docketResp[i].currentStatus}
                       </li>
                       <li>
                         Hearing Date: {this.state.docketResp[i].hearingDate}
