@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 
 class SavedDocket extends Component {
   render() {
@@ -7,6 +8,7 @@ class SavedDocket extends Component {
       <div>
         Use local storage for user saved dockets.
         <Link to="mainList">Back to the Other dockets</Link>
+        <Footer />
       </div>
     )
   }

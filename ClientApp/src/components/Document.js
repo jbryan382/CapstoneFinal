@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 
 class Document extends Component {
   render() {
@@ -14,10 +15,7 @@ class Document extends Component {
           <h5>Time Until Court Hearing</h5>
           <p>In-Depth Description of Docket (If available to the public)</p>
         </section>
-        <footer>
-          <h4>Copyright Information and Stuff.</h4>
-          <h5>Made with 💚 at SDG</h5>
-        </footer>
+        <Footer />
       </div>
     )
   }
