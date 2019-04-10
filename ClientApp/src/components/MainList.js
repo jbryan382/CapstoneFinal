@@ -63,7 +63,7 @@ class DocketList extends Component {
                           Docket Number: {this.state.docketResp[i].docketNumber}
                         </li>
                         <li>
-                          Current Status:
+                          Current Status:{' '}
                           {this.state.docketResp[i].currentStatus}
                         </li>
                         <li>
