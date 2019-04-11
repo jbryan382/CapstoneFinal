@@ -14,13 +14,14 @@ body {
 
 .LoginTitle {
   text-align: center;
+  margin: 3rem;
 }
 
 .LoginWindow {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: rgba(0, 0, 0, 0.05) solid 0.1rem;
+  margin: 4rem;
 }
 
 .SearchBar {

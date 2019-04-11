@@ -6,7 +6,7 @@ class SavedDocket extends Component {
   render() {
     return (
       <div>
-        Use local storage for user saved dockets.
+        Create additional Model on the back end to store user Access Tokens.
         <Link to="mainList">Back to the Other dockets</Link>
         <Footer />
       </div>

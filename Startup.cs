@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace content
 {
@@ -26,6 +27,16 @@ namespace content
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddAuthentication(options =>
+           {
+             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+           }).AddJwtBearer(options =>
+           {
+             options.Authority = "https://jbryan382.auth0.com";
+             options.Audience = "8PsZEKN13T4mhCoVdddp4oxTHCzcvj2t";
+           });
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
        .AddJsonOptions(options =>
       {
@@ -62,6 +73,7 @@ namespace content
       app.UseHealthChecks("/health");
       app.UseHttpsRedirection();
       app.UseSwagger();
+      app.UseAuthentication();
 
       // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
       // specifying the Swagger JSON endpoint.
