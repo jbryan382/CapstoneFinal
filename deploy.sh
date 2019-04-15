@@ -1,3 +1,5 @@
+#Logs into Docker Container
+heroku container:login
 # Windows only powershell
 dotnet publish -c Release 
 # Windows only powershell

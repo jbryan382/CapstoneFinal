@@ -10,6 +10,7 @@ import {
 } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import './NavMenu.css'
+import auth from '../Auth'
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name
@@ -27,6 +28,10 @@ export class NavMenu extends Component {
     this.setState({
       collapsed: !this.state.collapsed
     })
+  }
+
+  login = () => {
+    auth.logout()
   }
 
   render() {
@@ -58,7 +63,12 @@ export class NavMenu extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
+                  <NavLink
+                    tag={Link}
+                    onClick={this.logout}
+                    className="text-dark"
+                    to="/"
+                  >
                     Log Out
                   </NavLink>
                 </NavItem>

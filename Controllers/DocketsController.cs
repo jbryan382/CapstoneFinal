@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CapstoneFinal.Models;
 using content;
+using Microsoft.AspNetCore.Authorization;
 
 namespace content.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class DocketsController : ControllerBase
   {
     private DatabaseContext _context;

@@ -10,9 +10,8 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <h1 className="LoginTitle">Court Docket Database</h1>
+        <h1 className="LoginTitle">Amicus Curiae</h1>
         <section className="LoginWindow">
-          {/* I would like to use OAuth to prevent the need to store or authorize users locally */}
           <button onClick={this.login}>Log in</button>
         </section>
         <Footer />

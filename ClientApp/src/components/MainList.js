@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Form from 'react-jsonschema-form'
 import axios from 'axios'
 import Footer from './Footer'
+import moment from 'moment'
 
 class DocketList extends Component {
   state = {
@@ -67,10 +68,18 @@ class DocketList extends Component {
                           {this.state.docketResp[i].currentStatus}
                         </li>
                         <li>
-                          Hearing Date: {this.state.docketResp[i].hearingDate}
+                          Hearing Date:{' '}
+                          {this.state.docketResp[i].hearingDate &&
+                            moment(this.state.docketResp[i].hearingDate).format(
+                              'MMMM Do YY, h:mm:ss a'
+                            )}
                         </li>
                         <li>
-                          Date Created: {this.state.docketResp[i].dateCreated}
+                          Date Created:{' '}
+                          {this.state.docketResp[i].dateCreated &&
+                            moment(this.state.docketResp[i].dateCreated).format(
+                              'MMMM Do YY, h:mm:ss a'
+                            )}
                         </li>
                       </ul>
                     </li>
