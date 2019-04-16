@@ -71,7 +71,7 @@ namespace content
         app.UseHsts();
       }
       app.UseHealthChecks("/health");
-      app.UseHttpsRedirection();
+      // app.UseHttpsRedirection();
       app.UseSwagger();
       app.UseAuthentication();
 

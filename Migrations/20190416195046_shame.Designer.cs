@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using content;
@@ -9,9 +10,10 @@ using content;
 namespace content.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190416195046_shame")]
+    partial class shame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +69,24 @@ namespace content.Migrations
                     b.ToTable("Dockets");
                 });
 
+            modelBuilder.Entity("CapstoneFinal.Models.SavedDocket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DocketId");
+
+                    b.Property<int?>("usersId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocketId");
+
+                    b.HasIndex("usersId");
+
+                    b.ToTable("SavedDocket");
+                });
+
             modelBuilder.Entity("CapstoneFinal.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -89,6 +109,18 @@ namespace content.Migrations
                     b.HasOne("CapstoneFinal.Models.Users")
                         .WithMany("Dockets")
                         .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("CapstoneFinal.Models.SavedDocket", b =>
+                {
+                    b.HasOne("CapstoneFinal.Models.Docket", "Docket")
+                        .WithMany()
+                        .HasForeignKey("DocketId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CapstoneFinal.Models.Users", "users")
+                        .WithMany()
+                        .HasForeignKey("usersId");
                 });
 #pragma warning restore 612, 618
         }

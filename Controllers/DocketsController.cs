@@ -13,7 +13,7 @@ namespace content.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+
   public class DocketsController : ControllerBase
   {
     private DatabaseContext _context;
@@ -83,6 +83,15 @@ namespace content.Controllers
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetDocket", new { id = docket.Id }, docket);
+    }
+
+    // POST: api/Dockets/bulk
+    [HttpPost("bulk")]
+    public async Task<IEnumerable<Docket>> PostDocket(IEnumerable<Docket> dockets)
+    {
+      _context.Dockets.AddRange(dockets);
+      await _context.SaveChangesAsync();
+      return dockets;
     }
 
     // DELETE: api/Dockets/5

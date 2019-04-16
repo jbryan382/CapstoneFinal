@@ -1,5 +1,6 @@
 import auth0 from 'auth0-js'
 import history from './History'
+import axios from 'axios'
 
 const DOMAIN = 'jbryan382.auth0.com'
 const CLIENT_ID = '8PsZEKN13T4mhCoVdddp4oxTHCzcvj2t'
@@ -41,10 +42,42 @@ class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-
-        if (callback) {
-          callback()
-        }
+        axios
+          .get('/api/Users/check', {
+            headers: {
+              Authorization: auth.authorizationHeader()
+            }
+          })
+          .then(resp => {
+            console.log({ resp })
+            // if not then create
+            if (!resp.data.exists) {
+              axios
+                .post(
+                  '/api/Users',
+                  {
+                    userID: authResult.accessToken
+                  },
+                  {
+                    headers: {
+                      Authorization: auth.authorizationHeader()
+                    }
+                  }
+                )
+                .then(resp => {
+                  console.log({ resp })
+                  if (callback) {
+                    callback()
+                  }
+                  history.replace('/')
+                })
+            } else {
+              if (callback) {
+                callback()
+              }
+              history.replace('/')
+            }
+          })
       } else if (err) {
         history.replace('/')
         console.log(err)

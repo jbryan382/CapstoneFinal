@@ -27,11 +27,11 @@ namespace content.Controllers
 
       query = query.ToLower();
       var results = db.Dockets.Where(w =>
-      w.CaseName.ToLower().Contains(query) ||
+      w.case_name.ToLower().Contains(query) ||
       w.CurrentStatus.ToLower().Contains(query) ||
       w.DocketNumber.ToString().Contains(query) ||
       w.HearingDate.ToString().Contains(query) ||
-      w.DateCreated.ToString().Contains(query) ||
+      w.date_created.ToString().Contains(query) ||
       w.DateTerminated.ToString().Contains(query)
 
 

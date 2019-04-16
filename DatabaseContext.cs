@@ -50,5 +50,7 @@ namespace content
 
     public DbSet<Docket> Dockets { get; set; }
     public DbSet<Courthouse> Courthouses { get; set; }
+    // public DbSet<SavedDocket> SavedDocket { get; set; }
+    public DbSet<Users> Users { get; set; }
   }
 }

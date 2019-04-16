@@ -41,6 +41,13 @@ class DocketList extends Component {
       })
   }
 
+  saveDocket = docket => {
+    const data = { docketId: docket.id }
+    axios.post('/api/SavedDocket', data).then(resp => {
+      console.log(resp)
+    })
+  }
+
   render() {
     return (
       <div>
@@ -54,36 +61,30 @@ class DocketList extends Component {
         {this.state.docketResp.length > 0 && (
           <section className="ListSection">
             <ul>
-              {this.state.docketResp.map((c, i) => {
+              {this.state.docketResp.map((docket, i) => {
                 return (
-                  <div>
-                    <li key={i}>
-                      {this.state.docketResp[i].caseName}
-                      <ul>
-                        <li>
-                          Docket Number: {this.state.docketResp[i].docketNumber}
-                        </li>
-                        <li>
-                          Current Status:{' '}
-                          {this.state.docketResp[i].currentStatus}
-                        </li>
-                        <li>
-                          Hearing Date:{' '}
-                          {this.state.docketResp[i].hearingDate &&
-                            moment(this.state.docketResp[i].hearingDate).format(
-                              'MMMM Do YY, h:mm:ss a'
-                            )}
-                        </li>
-                        <li>
-                          Date Created:{' '}
-                          {this.state.docketResp[i].dateCreated &&
-                            moment(this.state.docketResp[i].dateCreated).format(
-                              'MMMM Do YY, h:mm:ss a'
-                            )}
-                        </li>
-                      </ul>
-                    </li>
-                  </div>
+                  <li key={i}>
+                    {docket.case_name}{' '}
+                    <button onClick={() => this.saveDocket(docket)}>+</button>
+                    <ul>
+                      <li>Docket Number: {docket.docketNumber}</li>
+                      <li>Current Status: {docket.currentStatus}</li>
+                      <li>
+                        Hearing Date:{' '}
+                        {docket.hearingDate &&
+                          moment(docket.hearingDate).format(
+                            'MMMM Do YY, h:mm:ss a'
+                          )}
+                      </li>
+                      <li>
+                        Date Created:{' '}
+                        {docket.date_created &&
+                          moment(docket.date_created).format(
+                            'MMMM Do YY, h:mm:ss a'
+                          )}
+                      </li>
+                    </ul>
+                  </li>
                 )
               })}
             </ul>

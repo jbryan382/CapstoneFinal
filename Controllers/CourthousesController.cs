@@ -13,7 +13,7 @@ namespace content.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+
   public class CourthousesController : ControllerBase
   {
     private DatabaseContext _context;
@@ -90,6 +90,15 @@ namespace content.Controllers
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetCourthouse", new { id = courthouse.Id }, courthouse);
+    }
+
+    // POST: api/Courthouses/bulk
+    [HttpPost("bulk")]
+    public async Task<IEnumerable<Courthouse>> PostCourthouse(IEnumerable<Courthouse> courthouses)
+    {
+      _context.Courthouses.AddRange(courthouses);
+      await _context.SaveChangesAsync();
+      return courthouses;
     }
 
     // DELETE: api/Courthouses/5

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using content;
@@ -9,9 +10,10 @@ using content;
 namespace content.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190416013935_UpdatedDocketsandCourt")]
+    partial class UpdatedDocketsandCourt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +54,6 @@ namespace content.Migrations
 
                     b.Property<DateTime?>("HearingDate");
 
-                    b.Property<int?>("UsersId");
-
                     b.Property<string>("case_name");
 
                     b.Property<DateTime?>("date_created");
@@ -62,21 +62,7 @@ namespace content.Migrations
 
                     b.HasIndex("CourthouseId");
 
-                    b.HasIndex("UsersId");
-
                     b.ToTable("Dockets");
-                });
-
-            modelBuilder.Entity("CapstoneFinal.Models.Users", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("userID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CapstoneFinal.Models.Docket", b =>
@@ -85,10 +71,6 @@ namespace content.Migrations
                         .WithMany("Dockets")
                         .HasForeignKey("CourthouseId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CapstoneFinal.Models.Users")
-                        .WithMany("Dockets")
-                        .HasForeignKey("UsersId");
                 });
 #pragma warning restore 612, 618
         }

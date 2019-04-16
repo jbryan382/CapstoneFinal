@@ -23,8 +23,9 @@ export default class App extends Component {
         <Route exact path="/login" render={() => auth.login()} />
         <Route
           path="/logout"
-          render={() => {
+          render={props => {
             auth.logout()
+            props.history.push('/')
             return <p />
           }}
         />
