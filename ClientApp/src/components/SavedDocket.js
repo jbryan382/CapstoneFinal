@@ -9,6 +9,7 @@ class SavedDocket extends Component {
     savedResp: []
   }
   componentDidMount() {
+    document.title = 'Saved Dockets'
     this.getAllDockets()
   }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace content.Controllers
 {
@@ -22,20 +23,17 @@ namespace content.Controllers
 
     [HttpGet("dockets")]
 
-    public ActionResult SearchForDockets([FromQuery] string query)
+    public async Task<ActionResult> SearchForDockets([FromQuery] string query)
     {
 
       query = query.ToLower();
-      var results = db.Dockets.Where(w =>
+      var results = await db.Dockets.Include(i => i.CourtHouse).Where(w =>
       w.case_name.ToLower().Contains(query) ||
-      w.CurrentStatus.ToLower().Contains(query) ||
       w.DocketNumber.ToString().Contains(query) ||
-      w.HearingDate.ToString().Contains(query) ||
+      w.CourtHouse.full_name.ToString().Contains(query) ||
       w.date_created.ToString().Contains(query) ||
       w.DateTerminated.ToString().Contains(query)
-
-
-      );
+      ).ToListAsync();
       return Ok(new { SearchingFor = query, results = results });
     }
 

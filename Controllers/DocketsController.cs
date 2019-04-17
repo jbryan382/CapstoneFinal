@@ -28,7 +28,7 @@ namespace content.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Docket>>> GetDockets()
     {
-      return await _context.Dockets.ToListAsync();
+      return await _context.Dockets.Include(i => i.CourtHouse).ToListAsync();
     }
 
     // GET: api/Dockets/5
@@ -86,24 +86,28 @@ namespace content.Controllers
     }
 
     // POST: api/Dockets/bulk
-    // [HttpPost("bulk")]
-    // public async Task<IEnumerable<Docket>> PostDocket(IEnumerable<DocketViewModel> docketsViewModels)
-    // {
-    //   var dockets = new List<Docket>();
-    //   // loop through the view models
-    //   // foreach on, get the courthouse for your own database
-    //   foreach (var something in docketsViewModels)
-    //   {
-    //     // Attempt 1
-    //     await _context.Courthouses.Include(i => i.Dockets).FirstOrDefaultAsync(f => f.Id == something.CourthouseId);
-    //     // and set the courthouseid == id of the courthouse in your database
-
-    //   }
-
-    //   _context.Dockets.AddRange(something);
-    //   await _context.SaveChangesAsync();
-    //   return dockets;
-    // }
+    [HttpPost("bulk")]
+    public async Task<IEnumerable<Docket>> PostDocket(IEnumerable<DocketViewModel> docketsViewModels)
+    {
+      var dockets = new List<Docket>();
+      // loop through the view models
+      // foreach on, 
+      foreach (var vm in docketsViewModels)
+      {
+        // Attempt 1
+        //get the courthouse for your own database
+        var courthouse = await _context.Courthouses.FirstOrDefaultAsync(f => f.CourtHouseId == vm.CourthouseId);
+        // and set the courthouseid == id of the courthouse in your database
+        var docket = new Docket(vm)
+        {
+          CourthouseId = courthouse.Id
+        };
+        dockets.Add(docket);
+      }
+      _context.Dockets.AddRange(dockets);
+      await _context.SaveChangesAsync();
+      return dockets;
+    }
 
     // DELETE: api/Dockets/5
     [HttpDelete("{id}")]

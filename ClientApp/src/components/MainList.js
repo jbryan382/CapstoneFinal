@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
-import Form from 'react-jsonschema-form'
 import axios from 'axios'
 import Footer from './Footer'
 import moment from 'moment'
-
+import auth from '../Auth'
 class DocketList extends Component {
   state = {
     docketResp: [],
@@ -21,6 +20,29 @@ class DocketList extends Component {
   }
 
   componentDidMount() {
+    document.title = 'Main Docket List'
+    this.loadAllDockets()
+  }
+
+  searchForDocs = event => {
+    event.preventDefault()
+    if (this.state.searchTerm) {
+      axios
+        .get(`/api/search/dockets?query=${this.state.searchTerm}`, {
+          headers: { Authorization: auth.authorizationHeader() }
+        })
+        .then(resp => {
+          console.log(resp)
+          this.setState({
+            docketResp: resp.data.results
+          })
+        })
+    } else {
+      this.loadAllDockets()
+    }
+  }
+
+  loadAllDockets = () => {
     axios.get('/api/Dockets').then(resp => {
       console.log({ resp })
 
@@ -28,17 +50,6 @@ class DocketList extends Component {
         docketResp: resp.data
       })
     })
-  }
-
-  searchForDocs = event => {
-    axios
-      .get(`/api/search/dockets?query=${event.formData.search}`)
-      .then(resp => {
-        console.log(resp)
-        this.setState({
-          docketResp: resp.data.results
-        })
-      })
   }
 
   saveDocket = docket => {
@@ -52,34 +63,55 @@ class DocketList extends Component {
     return (
       <div>
         <h1>Court Docket List:</h1>
-        {/* <Link to="/">Log Out</Link> */}
-        <Form
-          schema={this.state.formSchema}
-          onSubmit={this.searchForDocs}
-          className="form"
-        />
+        <form onSubmit={this.searchForDocs}>
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              aria-label="Recipient's username"
+              aria-describedby="button-addon2"
+              onChange={e => this.setState({ searchTerm: e.target.value })}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="submit"
+                id="button-addon2"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+
         {this.state.docketResp.length > 0 && (
           <section className="ListSection">
             <ul>
               {this.state.docketResp.map((docket, i) => {
                 return (
-                  <li key={i}>
-                    {docket.case_name}{' '}
-                    <button onClick={() => this.saveDocket(docket)}>+</button>
+                  <li key={i} className="case_name">
+                    Case Name: {docket.case_name}
+                    <button
+                      onClick={() => this.saveDocket(docket)}
+                      className="save_button"
+                    >
+                      +
+                    </button>
                     <ul>
-                      <li>Docket Number: {docket.docketNumber}</li>
-                      <li>Current Status: {docket.currentStatus}</li>
-                      <li>
-                        Hearing Date:{' '}
-                        {docket.hearingDate &&
-                          moment(docket.hearingDate).format(
-                            'MMMM Do YY, h:mm:ss a'
-                          )}
-                      </li>
                       <li>
                         Date Created:{' '}
                         {docket.date_created &&
                           moment(docket.date_created).format(
+                            'MMMM Do YYYY, h:mm:ss a'
+                          )}
+                      </li>
+                      <li>Docket Number: {docket.DocketNumber}</li>
+                      <li>Courthouse: {docket.courtHouse.full_name}</li>
+                      <li>
+                        Last Modified:{' '}
+                        {docket.DateTerminated &&
+                          moment(docket.DateTerminated).format(
                             'MMMM Do YY, h:mm:ss a'
                           )}
                       </li>

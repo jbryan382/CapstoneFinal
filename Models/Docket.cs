@@ -1,4 +1,5 @@
 using System;
+using CapstoneFinal.ViewModels;
 
 namespace CapstoneFinal.Models
 {
@@ -12,6 +13,20 @@ namespace CapstoneFinal.Models
     public DateTime? DateTerminated { get; set; }
     public string CurrentStatus { get; set; }
     public int CourthouseId { get; set; }
-    public Courthouse CourtHouses { get; set; }
+    public Courthouse CourtHouse { get; set; }
+    public Docket()
+    {
+      // default empty ctor
+    }
+    public Docket(DocketViewModel vm)
+    {
+      this.CurrentStatus = vm.CurrentStatus;
+      this.DateTerminated = vm.DateTerminated;
+      this.DocketNumber = vm.DocketNumber;
+      this.HearingDate = vm.HearingDate;
+      this.Id = vm.Id;
+      this.case_name = vm.case_name;
+      this.date_created = vm.date_created;
+    }
   }
 }

@@ -26,11 +26,34 @@ body {
 
 .SearchBar {
   display: flex;
-  margin: 0rem 1rem 1rem 8rem;
+  margin: 0rem 1rem 3rem 8rem;
+}
+
+.form {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .ListSection {
-  margin: 0rem 1rem 15rem 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.case_name {
+  margin: 1rem;
+}
+
+.save_button {
+  margin: 1rem;
+}
+
+.text-dark {
+  color: whitesmoke !important;
+}
+
+.navbar {
+  background-color: #0b4f6c;
 }
 
 footer {
