@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using CapstoneFinal.Models;
 using content;
 using Microsoft.AspNetCore.Authorization;
+using CapstoneFinal.ViewModels;
 
 namespace content.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-
   public class DocketsController : ControllerBase
   {
     private DatabaseContext _context;
@@ -86,13 +86,24 @@ namespace content.Controllers
     }
 
     // POST: api/Dockets/bulk
-    [HttpPost("bulk")]
-    public async Task<IEnumerable<Docket>> PostDocket(IEnumerable<Docket> dockets)
-    {
-      _context.Dockets.AddRange(dockets);
-      await _context.SaveChangesAsync();
-      return dockets;
-    }
+    // [HttpPost("bulk")]
+    // public async Task<IEnumerable<Docket>> PostDocket(IEnumerable<DocketViewModel> docketsViewModels)
+    // {
+    //   var dockets = new List<Docket>();
+    //   // loop through the view models
+    //   // foreach on, get the courthouse for your own database
+    //   foreach (var something in docketsViewModels)
+    //   {
+    //     // Attempt 1
+    //     await _context.Courthouses.Include(i => i.Dockets).FirstOrDefaultAsync(f => f.Id == something.CourthouseId);
+    //     // and set the courthouseid == id of the courthouse in your database
+
+    //   }
+
+    //   _context.Dockets.AddRange(something);
+    //   await _context.SaveChangesAsync();
+    //   return dockets;
+    // }
 
     // DELETE: api/Dockets/5
     [HttpDelete("{id}")]

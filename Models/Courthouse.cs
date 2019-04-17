@@ -10,6 +10,7 @@ namespace CapstoneFinal.Models
     public string full_name { get; set; }
     public string fjc_court_id { get; set; }
     public double position { get; set; }
+    public string CourtHouseId { get; set; }
     public List<Docket> Dockets { get; set; } = new List<Docket>();
   }
 }

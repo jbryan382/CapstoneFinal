@@ -23,97 +23,97 @@ namespace content.Controllers
       this._context = new DatabaseContext();
     }
 
-    //     // GET: api/SavedDocket
-    //     [HttpGet]
-    //     public async Task<ActionResult<IEnumerable<SavedDocket>>> GetSavedDocket()
-    //     {
-    //       var tokenId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
-    //       var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == tokenId);
-    //       return await _context.SavedDocket.Include(i => i.Docket).Where(w => w.usersId == user.Id).ToListAsync();
-    //     }
+    // GET: api/SavedDocket
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<SavedDocket>>> GetSavedDocket()
+    {
+      var tokenId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+      var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == tokenId);
+      return await _context.SavedDocket.Include(i => i.Docket).Where(w => w.UsersId == user.Id).ToListAsync();
+    }
 
-    //     // GET: api/SavedDocket/5
-    //     [HttpGet("{id}")]
-    //     public async Task<ActionResult<SavedDocket>> GetSavedDocket(int id)
-    //     {
-    //       var savedDocket = await _context.SavedDocket.FindAsync(id);
+    // GET: api/SavedDocket/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<SavedDocket>> GetSavedDocket(int id)
+    {
+      var savedDocket = await _context.SavedDocket.FindAsync(id);
 
-    //       if (savedDocket == null)
-    //       {
-    //         return NotFound();
-    //       }
+      if (savedDocket == null)
+      {
+        return NotFound();
+      }
 
-    //       return savedDocket;
-    //     }
+      return savedDocket;
+    }
 
-    //     // PUT: api/SavedDocket/5
-    //     [HttpPut("{id}")]
-    //     public async Task<IActionResult> PutSavedDocket(int id, SavedDocket savedDocket)
-    //     {
-    //       if (id != savedDocket.Id)
-    //       {
-    //         return BadRequest();
-    //       }
+    // PUT: api/SavedDocket/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutSavedDocket(int id, SavedDocket savedDocket)
+    {
+      if (id != savedDocket.Id)
+      {
+        return BadRequest();
+      }
 
-    //       _context.Entry(savedDocket).State = EntityState.Modified;
+      _context.Entry(savedDocket).State = EntityState.Modified;
 
-    //       try
-    //       {
-    //         await _context.SaveChangesAsync();
-    //       }
-    //       catch (DbUpdateConcurrencyException)
-    //       {
-    //         if (!SavedDocketExists(id))
-    //         {
-    //           return NotFound();
-    //         }
-    //         else
-    //         {
-    //           throw;
-    //         }
-    //       }
+      try
+      {
+        await _context.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!SavedDocketExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
 
-    //       return NoContent();
-    //     }
+      return NoContent();
+    }
 
-    //     // POST: api/SavedDocket
-    //     [HttpPost]
-    //     public async Task<ActionResult<SavedDocket>> PostSavedDocket(SavedDocket savedDocket)
-    //     {
-    //       var userId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+    // POST: api/SavedDocket
+    [HttpPost]
+    public async Task<ActionResult<SavedDocket>> PostSavedDocket(SavedDocket savedDocket)
+    {
+      var userId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
 
-    //       var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == userId);
-    //       savedDocket.usersId = user.Id;
-    //       _context.SavedDocket.Add(savedDocket);
-    //       await _context.SaveChangesAsync();
+      var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == userId);
+      savedDocket.UsersId = user.Id;
+      _context.SavedDocket.Add(savedDocket);
+      await _context.SaveChangesAsync();
 
-    //       return savedDocket;
-    //     }
+      return savedDocket;
+    }
 
-    //     // DELETE: api/SavedDocket/5
-    //     [HttpDelete("{id}")]
-    //     public async Task<ActionResult> DeleteSavedDocket(int id)
-    //     {
-    //       // get the saveddocket that was selected
-    //       var userId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
-    //       // verify that it does belong to the user
-    //       var user = _context.Users.FirstOrDefaultAsync(f => f.userID == userId);
-    //       var savedDocket = await _context.SavedDocket.FirstOrDefaultAsync(f => f.Id == id && f.usersId == user.Id);
+    // DELETE: api/SavedDocket/5
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteSavedDocket(int id)
+    {
+      // get the saveddocket that was selected
+      var userId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+      // verify that it does belong to the user
+      var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == userId);
+      var savedDocket = await _context.SavedDocket.FirstOrDefaultAsync(f => f.Id == id && f.UsersId == user.Id);
 
-    //       if (savedDocket == null)
-    //       {
-    //         return NotFound();
-    //       }
+      if (savedDocket == null)
+      {
+        return NotFound();
+      }
 
-    //       // delete
-    //       _context.SavedDocket.Remove(savedDocket);
-    //       await _context.SaveChangesAsync();
-    //       return Ok();
-    //     }
+      // delete
+      _context.SavedDocket.Remove(savedDocket);
+      await _context.SaveChangesAsync();
+      return Ok();
+    }
 
-    //     private bool SavedDocketExists(int id)
-    //     {
-    //       return _context.SavedDocket.Any(e => e.Id == id);
-    //     }
+    private bool SavedDocketExists(int id)
+    {
+      return _context.SavedDocket.Any(e => e.Id == id);
+    }
   }
 }

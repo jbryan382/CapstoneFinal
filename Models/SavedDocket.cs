@@ -7,7 +7,7 @@ namespace CapstoneFinal.Models
     public int Id { get; set; }
     public int DocketId { get; set; }
     public Docket Docket { get; set; }
-    public int? usersId { get; set; }
-    public Users users { get; set; }
+    public int UsersId { get; set; }
+    public Users Users { get; set; }
   }
 }
