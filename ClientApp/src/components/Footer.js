@@ -4,12 +4,12 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <h5>Utilizing CourtListener API.</h5>
-        <h5>Made with </h5>
+        <p>Utilizing CourtListener API.</p>
+        <p>Made with </p>
         <span role="img" aria-label="GreenHeart">
           💚
         </span>
-        <h5>at SDG</h5>
+        <p>at SDG</p>
       </footer>
     )
   }

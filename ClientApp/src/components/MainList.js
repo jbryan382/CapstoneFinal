@@ -91,31 +91,46 @@ class DocketList extends Component {
               {this.state.docketResp.map((docket, i) => {
                 return (
                   <li key={i} className="case_name">
-                    Case Name: {docket.case_name}
-                    <button
-                      onClick={() => this.saveDocket(docket)}
-                      className="save_button"
-                    >
-                      +
-                    </button>
-                    <ul>
-                      <li>
-                        Date Created:{' '}
-                        {docket.date_created &&
-                          moment(docket.date_created).format(
-                            'MMMM Do YYYY, h:mm:ss a'
-                          )}
-                      </li>
-                      <li>Docket Number: {docket.DocketNumber}</li>
-                      <li>Courthouse: {docket.courtHouse.full_name}</li>
-                      <li>
-                        Last Modified:{' '}
-                        {docket.DateTerminated &&
-                          moment(docket.DateTerminated).format(
-                            'MMMM Do YY, h:mm:ss a'
-                          )}
-                      </li>
-                    </ul>
+                    <span className="description_tag">Case Name:</span>
+                    {docket.case_name}
+                    <section className="case_details">
+                      <span className="case_details1">
+                        <section>
+                          <span className="description_tag">Date Created:</span>
+                          {docket.date_created &&
+                            moment(docket.date_created).format(
+                              'MMMM Do YYYY, h:mm:ss a'
+                            )}
+                        </section>
+                        <section>
+                          <span className="description_tag">
+                            Last Modified:
+                          </span>
+                          {docket.dateTerminated &&
+                            moment(docket.dateTerminated).format(
+                              'MMMM Do YY, h:mm:ss a'
+                            )}
+                        </section>
+                      </span>
+                      <span className="case_details2">
+                        <section>
+                          <span className="description_tag">
+                            Docket Number:
+                          </span>
+                          {docket.docketNumber}
+                        </section>
+                        <section>
+                          <span className="description_tag">Courthouse:</span>
+                          {docket.courtHouse.full_name}
+                        </section>
+                      </span>
+                      <button
+                        onClick={() => this.saveDocket(docket)}
+                        className="btn btn-primary"
+                      >
+                        Save
+                      </button>
+                    </section>
                   </li>
                 )
               })}

@@ -29,7 +29,7 @@ namespace content.Controllers
     {
       var tokenId = User.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
       var user = await _context.Users.FirstOrDefaultAsync(f => f.userID == tokenId);
-      return await _context.SavedDocket.Include(i => i.Docket).Where(w => w.UsersId == user.Id).ToListAsync();
+      return await _context.SavedDocket.Include(i => i.Docket).ThenInclude(i => i.CourtHouse).Where(w => w.UsersId == user.Id).ToListAsync();
     }
 
     // GET: api/SavedDocket/5

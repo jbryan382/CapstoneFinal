@@ -27,10 +27,13 @@ namespace content.Controllers
     {
 
       query = query.ToLower();
+      // var results = await db.Dockets.Include(i => i.CourtHouse).Where(w =>
+      // w.CourtHouse.full_name.Contains(query)
+      // ).ToListAsync();
       var results = await db.Dockets.Include(i => i.CourtHouse).Where(w =>
       w.case_name.ToLower().Contains(query) ||
       w.DocketNumber.ToString().Contains(query) ||
-      w.CourtHouse.full_name.ToString().Contains(query) ||
+      w.CourtHouse.full_name.ToLower().Contains(query) ||
       w.date_created.ToString().Contains(query) ||
       w.DateTerminated.ToString().Contains(query)
       ).ToListAsync();
