@@ -93,3 +93,7 @@ footer {
 li {
   list-style: none;
 }
+
+li.case_name:nth-child(even) {
+  background: #ccc;
+}
