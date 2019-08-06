@@ -4,6 +4,8 @@ import axios from 'axios'
 import Footer from './Footer'
 import moment from 'moment'
 import auth from '../Auth'
+import PageCount from './PageCount'
+
 class DocketList extends Component {
   state = {
     docketResp: [],
@@ -138,6 +140,7 @@ class DocketList extends Component {
           </section>
         )}
         {this.state.docketResp.length === 0 && <h5>No Dockets Found</h5>}
+        <PageCount />
         <Footer />
       </div>
     )
