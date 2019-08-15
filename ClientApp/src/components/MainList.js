@@ -4,11 +4,15 @@ import axios from 'axios'
 import Footer from './Footer'
 import moment from 'moment'
 import auth from '../Auth'
-import PageCount from './PageCount'
+// import PageCount from './PageCount'
+import Pagination from 'react-js-pagination'
 
 class DocketList extends Component {
   state = {
     docketResp: [],
+    pagedDockets: [],
+    activePage: 1,
+    itemsCountPerPage: 10,
     formSchema: {
       type: 'object',
       properties: {
@@ -24,6 +28,21 @@ class DocketList extends Component {
   componentDidMount() {
     document.title = 'Main Docket List'
     this.loadAllDockets()
+  }
+
+  handlePageChange = pageNumber => {
+    console.log(`active page is ${pageNumber}`)
+
+    this.setState({ activePage: pageNumber }, () => {
+      this.setState({
+        pagedDockets: this.state.docketResp.filter((_, index) => {
+          return (
+            index < this.state.activePage * this.state.itemsCountPerPage &&
+            index > (this.state.activePage - 1) * this.state.itemsCountPerPage
+          )
+        })
+      })
+    })
   }
 
   searchForDocs = event => {
@@ -49,7 +68,10 @@ class DocketList extends Component {
       console.log({ resp })
 
       this.setState({
-        docketResp: resp.data
+        docketResp: resp.data,
+        pagedDockets: resp.data.filter((_, index) => {
+          return index < this.state.activePage * this.state.itemsCountPerPage
+        })
       })
     })
   }
@@ -90,7 +112,7 @@ class DocketList extends Component {
         {this.state.docketResp.length > 0 && (
           <section className="ListSection">
             <ul>
-              {this.state.docketResp.map((docket, i) => {
+              {this.state.pagedDockets.map((docket, i) => {
                 return (
                   <li key={i} className="case_name">
                     <span className="description_tag">Case Name:</span>
@@ -140,7 +162,14 @@ class DocketList extends Component {
           </section>
         )}
         {this.state.docketResp.length === 0 && <h5>No Dockets Found</h5>}
-        <PageCount />
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={this.state.docketResp.length}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageChange}
+        />
+        {/* <PageCount numDockets={this.state.docketResp.length} /> */}
         <Footer />
       </div>
     )

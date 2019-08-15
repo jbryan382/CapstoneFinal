@@ -9,7 +9,7 @@ class PageCount extends Component {
     }
   }
 
-  handlePageChange(pageNumber) {
+  handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
     this.setState({ activePage: pageNumber })
   }
@@ -20,7 +20,7 @@ class PageCount extends Component {
         <Pagination
           activePage={this.state.activePage}
           itemsCountPerPage={10}
-          totalItemsCount={450}
+          totalItemsCount={this.props.numDockets}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
