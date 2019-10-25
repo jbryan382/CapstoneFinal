@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Footer from './Footer'
 import moment from 'moment'
@@ -114,48 +114,46 @@ class DocketList extends Component {
             <ul>
               {this.state.pagedDockets.map((docket, i) => {
                 return (
-                  <li key={i} className="case_name">
-                    <span className="description_tag">Case Name:</span>
-                    {docket.case_name}
-                    <section className="case_details">
-                      <span className="case_details1">
-                        <section>
-                          <span className="description_tag">Date Created:</span>
-                          {docket.date_created &&
-                            moment(docket.date_created).format(
-                              'MMMM Do YYYY, h:mm:ss a'
-                            )}
-                        </section>
-                        <section>
-                          <span className="description_tag">
-                            Last Modified:
-                          </span>
-                          {docket.dateTerminated &&
-                            moment(docket.dateTerminated).format(
-                              'MMMM Do YY, h:mm:ss a'
-                            )}
-                        </section>
-                      </span>
-                      <span className="case_details2">
-                        <section>
-                          <span className="description_tag">
-                            Docket Number:
-                          </span>
-                          {docket.docketNumber}
-                        </section>
-                        <section>
-                          <span className="description_tag">Courthouse:</span>
-                          {docket.courtHouse.full_name}
-                        </section>
-                      </span>
-                      <button
-                        onClick={() => this.saveDocket(docket)}
-                        className="btn btn-primary"
-                      >
-                        Save
-                      </button>
-                    </section>
-                  </li>
+                  <dl key={i} className="case_name">
+                    <Link to={`/Dockets/${docket.id}`}>
+                      <span className="description_tag">Case Name:</span>
+                      {docket.case_name}
+                      <section className="case_details">
+                        <span className="case_details1">
+                          <section>
+                            <dt className="description_tag">Date Created:</dt>
+                            {docket.date_created &&
+                              moment(docket.date_created).format(
+                                'MMMM Do YYYY, h:mm:ss a'
+                              )}
+                          </section>
+                          <section>
+                            <dt className="description_tag">Last Modified:</dt>
+                            {docket.dateTerminated &&
+                              moment(docket.dateTerminated).format(
+                                'MMMM Do YY, h:mm:ss a'
+                              )}
+                          </section>
+                        </span>
+                        <span className="case_details2">
+                          <section>
+                            <dt className="description_tag">Docket Number:</dt>
+                            {docket.docketNumber}
+                          </section>
+                          <section>
+                            <dt className="description_tag">Courthouse:</dt>
+                            {docket.courtHouse.full_name}
+                          </section>
+                        </span>
+                        <button
+                          onClick={() => this.saveDocket(docket)}
+                          className="btn btn-primary"
+                        >
+                          Save
+                        </button>
+                      </section>
+                    </Link>
+                  </dl>
                 )
               })}
             </ul>
@@ -168,6 +166,7 @@ class DocketList extends Component {
           totalItemsCount={this.state.docketResp.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
+          className="page-item"
         />
         {/* <PageCount numDockets={this.state.docketResp.length} /> */}
         <Footer />

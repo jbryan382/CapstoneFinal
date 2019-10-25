@@ -18,7 +18,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path="/" component={Login} />
         <Route path="/mainList" component={mainList} />
-        <Route path="/docket" component={Doc} />
+        <Route path="/Dockets/:docketId" component={Doc} />
         <Route path="/SavedDocket" component={SavedDocket} />
         <Route exact path="/login" render={() => auth.login()} />
         <Route
