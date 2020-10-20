@@ -16,9 +16,9 @@ namespace content.Controllers
   {
     private DatabaseContext db;
 
-    public SearchController()
+    public SearchController(DatabaseContext context)
     {
-      this.db = new DatabaseContext();
+      this.db = context;
     }
 
     [HttpGet("dockets")]

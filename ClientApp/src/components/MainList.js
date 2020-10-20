@@ -66,7 +66,6 @@ class DocketList extends Component {
   loadAllDockets = () => {
     axios.get('/api/Dockets').then(resp => {
       console.log({ resp })
-
       this.setState({
         docketResp: resp.data,
         pagedDockets: resp.data.filter((_, index) => {
@@ -166,7 +165,6 @@ class DocketList extends Component {
           totalItemsCount={this.state.docketResp.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
-          className="page-item"
         />
         {/* <PageCount numDockets={this.state.docketResp.length} /> */}
         <Footer />
